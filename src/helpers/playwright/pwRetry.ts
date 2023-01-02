@@ -2,6 +2,7 @@ import {Locator, Page} from 'playwright-core';
 import {config} from '../config';
 
 import {retry, RetryOptions} from '../retry';
+import {RetryAttemptOptionsMain} from '../retryAttempts';
 import {isRetryUntilTimeoutOptions} from '../retryUntilTimeout';
 import {sleepFunc} from './sleepFunc';
 
@@ -32,7 +33,7 @@ export const pwRetry = async <T extends Locator | Page>(
   await retry(impl, options);
 };
 
-const defaultPwRetryOptionsMain = {
+const defaultPwRetryOptionsMain: Required<RetryAttemptOptionsMain> = {
   maxAttempts: 20,
   interval: config.timeoutUnit * 0.2, // milliseconds
 };
