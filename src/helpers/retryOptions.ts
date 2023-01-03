@@ -64,19 +64,6 @@ type RetryAttemptOptionsBase = RetryOptionsBase<'catch' | 'exceeded'>;
 export type RetryAttemptOptions = RetryAttemptOptionsMain &
   RetryAttemptOptionsBase;
 
-export const fillRetryAttemptsOptions = (
-  x: RetryAttemptOptions | undefined,
-  defaultOptions: Required<RetryAttemptOptions>
-): Required<RetryAttemptOptions> => {
-  return {
-    maxAttempts: x?.maxAttempts ?? defaultOptions.maxAttempts,
-    interval: x?.interval ?? defaultOptions.interval,
-    intervalFunc: x?.intervalFunc ?? defaultOptions.intervalFunc,
-    throwOn: x?.throwOn ?? defaultOptions.throwOn,
-    errorFunc: x?.errorFunc ?? defaultOptions.errorFunc,
-  };
-};
-
 export const isRetryAttemptOptions = (x: unknown): x is RetryAttemptOptions => {
   return (
     typeof x === 'object' && x !== null && (x as any).maxAttempts !== undefined // eslint-disable-line @typescript-eslint/no-explicit-any
