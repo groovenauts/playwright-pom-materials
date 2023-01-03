@@ -8,14 +8,21 @@ import {
   isRetryAttemptOptions,
   RetryOptions,
 } from './retryOptions';
+import {
+  RetryUntilTimeoutOptionsDefault,
+  RetryAttemptOptionsDefault,
+} from './retryOptionsDefault';
 
-const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> = {
-  timeout: 2 * 60 * config.timeoutUnit,
-  interval: 10 * config.timeoutUnit,
-  intervalFunc: sleep,
-  throwOn: ['timeout'],
-  errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
-};
+const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
+  new RetryUntilTimeoutOptionsDefault(
+    () => 2 * 60 * config.timeoutUnit,
+    () => 10 * config.timeoutUnit,
+    {
+      intervalFunc: sleep,
+      throwOn: ['timeout'],
+      errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
+    }
+  );
 
 /**
  * 引数 fn が true を返すまで処理を繰り返す関数。
@@ -138,10 +145,15 @@ export const retryAttempts = async (
   if (throwOn.includes('exceeded')) await errorFunc(errors);
 };
 
-const defaultRetryAttemptsOptions = {
-  maxAttempts: 3,
-  interval: config.timeoutUnit,
-  intervalFunc: sleep,
-  throwOn: ['exceeded'],
-  errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
-};
+const defaultRetryAttemptsOptions: Required<RetryAttemptOptions> =
+  new RetryAttemptOptionsDefault(
+    () => 3,
+    () => config.timeoutUnit,
+    {
+      intervalFunc: sleep,
+      throwOn: ['exceeded'],
+      errorFunc: newErrorProcessor(
+        () => new Error('Retry exceeded maxAttempts')
+      ),
+    }
+  );
