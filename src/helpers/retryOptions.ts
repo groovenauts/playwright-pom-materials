@@ -18,15 +18,6 @@ type RetryUntilTimeoutOptionsBase = RetryOptionsBase<'catch' | 'timeout'>;
 export type RetryUntilTimeoutOptions = RetryUntilTimeoutOptionsMain &
   RetryUntilTimeoutOptionsBase;
 
-export const newDefaultRetryUntilTimeoutOptions = (
-  timeout: number,
-  interval: number
-): Required<RetryUntilTimeoutOptions> => ({
-  timeout,
-  interval,
-  ...defaultRetryUntilTimeoutOptionsBase,
-});
-
 export const isRetryUntilTimeoutOptions = (
   x: unknown
 ): x is RetryUntilTimeoutOptions => {

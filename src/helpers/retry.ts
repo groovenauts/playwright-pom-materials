@@ -3,7 +3,6 @@ import {retryUntilTimeout} from './retryUntilTimeout';
 import {
   RetryUntilTimeoutOptions,
   defaultRetryUntilTimeoutOptions,
-  newDefaultRetryUntilTimeoutOptions,
   RetryAttemptOptions,
   isRetryAttemptOptions,
 } from './retryOptions';
@@ -36,10 +35,11 @@ export const uiRetry = (
   fn: () => Promise<boolean>,
   options?: RetryOptions
 ): Promise<void> => retryBase(fn, defaultUiRetryOptions, options);
-export const defaultUiRetryOptions = newDefaultRetryUntilTimeoutOptions(
-  config.timeoutUnit * 30,
-  config.timeoutUnit * 1
-);
+export const defaultUiRetryOptions = {
+  ...defaultRetryUntilTimeoutOptions,
+  timeout: config.timeoutUnit * 30,
+  interval: config.timeoutUnit * 1,
+};
 
 export const retryBase = async (
   fn: () => Promise<boolean>,
