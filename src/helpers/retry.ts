@@ -4,7 +4,6 @@ import {
   RetryUntilTimeoutOptions,
   defaultRetryUntilTimeoutOptions,
   newDefaultRetryUntilTimeoutOptions,
-  fillRetryUntilTimeoutOptions,
 } from './retryUntilTimeout';
 import {
   retryAttempts,
@@ -52,7 +51,6 @@ export const retryBase = async (
   if (isRetryAttemptOptions(options)) {
     await retryAttempts(fn, options);
   } else {
-    options = fillRetryUntilTimeoutOptions(options, defaultOptions);
-    await retryUntilTimeout(fn, options);
+    await retryUntilTimeout(fn, {...defaultOptions, ...options});
   }
 };

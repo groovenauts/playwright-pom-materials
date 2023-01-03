@@ -34,16 +34,6 @@ export const isRetryUntilTimeoutOptions = (
   );
 };
 
-export const fillRetryUntilTimeoutOptions = (
-  x: RetryUntilTimeoutOptions | undefined,
-  defaultOptions: Required<RetryUntilTimeoutOptions>
-): Required<RetryUntilTimeoutOptions> => {
-  return {
-    ...defaultOptions,
-    ...x,
-  };
-};
-
 const defaultRetryErrorProc = newErrorProcessor(
   () => new Error('Timeout Error')
 );
@@ -68,10 +58,7 @@ export const retryUntilTimeout = async (
   fn: () => Promise<boolean>,
   options?: RetryUntilTimeoutOptions
 ): Promise<void> => {
-  const opts = fillRetryUntilTimeoutOptions(
-    options,
-    defaultRetryUntilTimeoutOptions
-  );
+  const opts = {...defaultRetryUntilTimeoutOptions, ...options};
 
   const t0 = Date.now();
   const errors: unknown[] = [];
