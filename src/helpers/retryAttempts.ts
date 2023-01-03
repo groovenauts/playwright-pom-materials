@@ -3,8 +3,6 @@ import {sleep} from './sleep';
 
 import {newErrorProcessor, RetryErrorProcessor} from './retryErrorFunc';
 
-export type errorMessageFunc = () => string;
-
 export interface RetryAttemptOptionsMain {
   maxAttempts?: number;
   interval?: number;
