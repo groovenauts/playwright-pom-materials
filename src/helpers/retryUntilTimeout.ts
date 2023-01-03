@@ -34,10 +34,6 @@ export const isRetryUntilTimeoutOptions = (
   );
 };
 
-const defaultRetryErrorProc = newErrorProcessor(
-  () => new Error('Timeout Error')
-);
-
 /**
  * 引数 fn が true を返すまで処理を繰り返す関数。
  * 繰り返し処理を行う最大時間をオプションの timeout で指定可能。
@@ -86,7 +82,7 @@ export const defaultRetryUntilTimeoutOptionsBase: Required<RetryUntilTimeoutOpti
   {
     intervalFunc: sleep,
     throwOn: ['timeout'],
-    errorFunc: defaultRetryErrorProc,
+    errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
   };
 
 export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
