@@ -70,20 +70,10 @@ export const isRetryAttemptOptions = (x: unknown): x is RetryAttemptOptions => {
   );
 };
 
-export const defaultRetryAttemptsOptionsMain: Required<RetryAttemptOptionsMain> =
-  {
-    maxAttempts: 3,
-    interval: config.timeoutUnit,
-  };
-
-export const defaultRetryAttemptsOptionsBase: Required<RetryAttemptOptionsBase> =
-  {
-    intervalFunc: sleep,
-    throwOn: ['exceeded'],
-    errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
-  };
-
 export const defaultRetryAttemptsOptions = {
-  ...defaultRetryAttemptsOptionsMain,
-  ...defaultRetryAttemptsOptionsBase,
+  maxAttempts: 3,
+  interval: config.timeoutUnit,
+  intervalFunc: sleep,
+  throwOn: ['exceeded'],
+  errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
 };
