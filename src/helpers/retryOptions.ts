@@ -26,23 +26,13 @@ export const isRetryUntilTimeoutOptions = (
   );
 };
 
-export const defaultRetryUntilTimeoutOptionsMain: Required<RetryUntilTimeoutOptionsMain> =
+export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
   {
     timeout: 2 * 60 * config.timeoutUnit,
     interval: 10 * config.timeoutUnit,
-  };
-
-export const defaultRetryUntilTimeoutOptionsBase: Required<RetryUntilTimeoutOptionsBase> =
-  {
     intervalFunc: sleep,
     throwOn: ['timeout'],
     errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
-  };
-
-export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
-  {
-    ...defaultRetryUntilTimeoutOptionsMain,
-    ...defaultRetryUntilTimeoutOptionsBase,
   };
 
 export interface RetryAttemptOptionsMain {
