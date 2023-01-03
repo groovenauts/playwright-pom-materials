@@ -1,5 +1,5 @@
 import {Clickable, ClickableOptions} from './Clickable';
-import {retry} from '../helpers/playwright';
+import {pwRetry} from '../helpers/playwright';
 
 export type SelectTagOptions = ClickableOptions;
 
@@ -59,7 +59,7 @@ export class SelectTag extends Clickable {
         : label instanceof RegExp
         ? (s?: string): boolean => (s ? !!s.match(label) : false)
         : (s?: string): boolean => (s ? s.includes(label.contains) : false);
-    return retry(this.locator, async (): Promise<boolean> => {
+    return pwRetry(this.locator, async (): Promise<boolean> => {
       await this.select(label, options);
       const value = await this.label();
       return fn(value);

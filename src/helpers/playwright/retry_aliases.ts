@@ -13,7 +13,7 @@ import {sleepFunc} from './sleepFunc';
  * オプションに maxAttempts を指定する場合の振る舞いは retryAttempts と同じ。
  * オプションに maxAttempts を指定されない場合の振る舞いは retryUntilTimeout と同じ。
  */
-export const retry = async (
+export const pwRetry = async (
   x: Locator | Page,
   fn: () => Promise<boolean>,
   options?: RetryOptions
