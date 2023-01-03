@@ -2,7 +2,11 @@
   "name": "playwright-pom-materials",
   "version": "0.1.0",
   "description": "Playwright POM materials",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "build": "run-s compile lint",
     "clean": "rm -rf lib",
