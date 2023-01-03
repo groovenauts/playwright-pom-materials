@@ -62,13 +62,10 @@ export const retryAttempts = async (
   fn: () => Promise<boolean>,
   options?: RetryAttemptOptions
 ): Promise<void> => {
-  const maxAttempts =
-    options?.maxAttempts || defaultRetryAttemptsOptions.maxAttempts;
-  const interval = options?.interval || defaultRetryAttemptsOptions.interval;
-  const throwOn = options?.throwOn || defaultRetryAttemptsOptions.throwOn;
-  const errorFunc = options?.errorFunc || defaultRetryAttemptsOptions.errorFunc;
-  const intervalFunc =
-    options?.intervalFunc || defaultRetryAttemptsOptions.intervalFunc;
+  const {maxAttempts, interval, throwOn, errorFunc, intervalFunc} = {
+    ...defaultRetryAttemptsOptions,
+    ...options,
+  };
 
   const errors: unknown[] = [];
   for (let attempts = 0; attempts < maxAttempts; attempts++) {
