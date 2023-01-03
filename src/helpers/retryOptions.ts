@@ -18,7 +18,7 @@ export interface RetryUntilTimeoutOptions
     RetryOptionsBase<'catch' | 'timeout'> {}
 
 export const isRetryUntilTimeoutOptions = (
-  x: unknown
+  x?: RetryOptions
 ): x is RetryUntilTimeoutOptions => {
   return (
     typeof x === 'object' && x !== null && (x as any).timeout !== undefined // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -43,7 +43,9 @@ export interface RetryAttemptOptions
   extends RetryAttemptOptionsMain,
     RetryOptionsBase<'catch' | 'exceeded'> {}
 
-export const isRetryAttemptOptions = (x: unknown): x is RetryAttemptOptions => {
+export const isRetryAttemptOptions = (
+  x?: RetryOptions
+): x is RetryAttemptOptions => {
   return (
     typeof x === 'object' && x !== null && (x as any).maxAttempts !== undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   );
