@@ -39,11 +39,8 @@ export const fillRetryUntilTimeoutOptions = (
   defaultOptions: Required<RetryUntilTimeoutOptions>
 ): Required<RetryUntilTimeoutOptions> => {
   return {
-    timeout: x?.timeout ?? defaultOptions.timeout,
-    interval: x?.interval ?? defaultOptions.interval,
-    intervalFunc: x?.intervalFunc ?? defaultOptions.intervalFunc,
-    throwOn: x?.throwOn ?? defaultOptions.throwOn,
-    errorFunc: x?.errorFunc ?? defaultOptions.errorFunc,
+    ...defaultOptions,
+    ...x,
   };
 };
 
