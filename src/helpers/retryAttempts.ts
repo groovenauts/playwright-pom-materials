@@ -65,9 +65,10 @@ export const retryAttempts = async (
   const maxAttempts =
     options?.maxAttempts || defaultRetryAttemptsOptions.maxAttempts;
   const interval = options?.interval || defaultRetryAttemptsOptions.interval;
-  const throwOn = options?.throwOn || ['exceeded'];
-  const errorFunc = options?.errorFunc || defaultRetryErrorProc;
-  const intervalFunc = options?.intervalFunc || sleep;
+  const throwOn = options?.throwOn || defaultRetryAttemptsOptions.throwOn;
+  const errorFunc = options?.errorFunc || defaultRetryAttemptsOptions.errorFunc;
+  const intervalFunc =
+    options?.intervalFunc || defaultRetryAttemptsOptions.intervalFunc;
 
   const errors: unknown[] = [];
   for (let attempts = 0; attempts < maxAttempts; attempts++) {
