@@ -1,6 +1,6 @@
 export type RetryErrorProcessor = {(errors: unknown[]): Promise<void>};
 
-export const newErrorProcessor = (defaultError: {
+export const newRetryErrorProcessor = (defaultError: {
   (): Error;
 }): RetryErrorProcessor => {
   return (errors: unknown[]): Promise<void> => {

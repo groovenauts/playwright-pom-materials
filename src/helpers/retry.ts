@@ -1,6 +1,6 @@
 import {config} from './config';
 import {sleep} from './sleep';
-import {newErrorProcessor} from './retryErrorFunc';
+import {newRetryErrorProcessor} from './retryErrorFunc';
 
 import {
   RetryUntilTimeoutOptions,
@@ -20,7 +20,7 @@ const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
     {
       intervalFunc: sleep,
       throwOn: ['timeout'],
-      errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
+      errorFunc: newRetryErrorProcessor(() => new Error('Timeout Error')),
     }
   );
 
@@ -152,7 +152,7 @@ const defaultRetryAttemptsOptions: Required<RetryAttemptOptions> =
     {
       intervalFunc: sleep,
       throwOn: ['exceeded'],
-      errorFunc: newErrorProcessor(
+      errorFunc: newRetryErrorProcessor(
         () => new Error('Retry exceeded maxAttempts')
       ),
     }
