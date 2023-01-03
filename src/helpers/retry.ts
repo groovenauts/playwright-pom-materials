@@ -4,12 +4,10 @@ import {
   RetryUntilTimeoutOptions,
   defaultRetryUntilTimeoutOptions,
   newDefaultRetryUntilTimeoutOptions,
-} from './retryOptions';
-import {
-  retryAttempts,
   RetryAttemptOptions,
   isRetryAttemptOptions,
-} from './retryAttempts';
+} from './retryOptions';
+import {retryAttempts} from './retryAttempts';
 
 export type RetryOptions = RetryUntilTimeoutOptions | RetryAttemptOptions;
 
