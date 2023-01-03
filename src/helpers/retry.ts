@@ -5,9 +5,8 @@ import {
   RetryAttemptOptions,
   isRetryAttemptOptions,
   defaultRetryAttemptsOptions,
+  RetryOptions,
 } from './retryOptions';
-
-export type RetryOptions = RetryUntilTimeoutOptions | RetryAttemptOptions;
 
 /**
  * 引数 fn が true を返すまで処理を繰り返す関数。

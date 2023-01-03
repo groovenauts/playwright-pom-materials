@@ -56,3 +56,5 @@ export const defaultRetryAttemptsOptions = {
   throwOn: ['exceeded'],
   errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
 };
+
+export type RetryOptions = RetryUntilTimeoutOptions | RetryAttemptOptions;

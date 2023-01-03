@@ -1,8 +1,8 @@
 import {Locator, Page} from 'playwright-core';
 import {config} from '../config';
 
-import {retry, RetryOptions} from '../retry';
-import {RetryAttemptOptionsMain} from '../retryOptions';
+import {retry} from '../retry';
+import {RetryOptions, RetryAttemptOptionsMain} from '../retryOptions';
 import {isRetryUntilTimeoutOptions} from '../retryOptions';
 import {sleepFunc} from './sleepFunc';
 
