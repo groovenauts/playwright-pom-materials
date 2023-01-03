@@ -4,7 +4,7 @@ export {RetryOptions} from '../retry'; // export type alias
 export {RetryAttemptOptions} from '../retryOptions'; // export type alias
 
 import {RetryOptions, retry as retryRaw, uiRetry as uiRetryRaw} from '../retry';
-import {retryAttempts as retryAttemptsRaw} from '../retryAttempts';
+import {retryAttempts as retryAttemptsRaw} from '../retry';
 import {RetryAttemptOptions} from '../retryOptions';
 import {sleepFunc} from './sleepFunc';
 
