@@ -36,10 +36,6 @@ export const isRetryAttemptOptions = (x: unknown): x is RetryAttemptOptions => {
   );
 };
 
-const defaultRetryErrorProc = newErrorProcessor(
-  () => new Error('Retry exceeded maxAttempts')
-);
-
 /**
  * 引数 fn が true を返すまで処理を繰り返す関数。
  * 繰り返しの上限をオプションの maxAttempts で指定可能。
@@ -90,7 +86,7 @@ export const defaultRetryAttemptsOptionsBase: Required<RetryAttemptOptionsBase> 
   {
     intervalFunc: sleep,
     throwOn: ['exceeded'],
-    errorFunc: defaultRetryErrorProc,
+    errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
   };
 
 export const defaultRetryAttemptsOptions = {
