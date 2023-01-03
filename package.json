@@ -1,7 +1,7 @@
 {
   "name": "playwright-pom-materials",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Playwright POM materials",
   "main": "index.js",
   "scripts": {
     "build": "run-s compile lint",
@@ -11,9 +11,14 @@
     "prettier": "prettier --write **/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "playwright",
+    "E2E",
+    "test",
+    "POM"
+  ],
+  "author": "Groovenauts, Inc.",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
