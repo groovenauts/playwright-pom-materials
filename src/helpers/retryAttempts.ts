@@ -5,16 +5,16 @@ import {newErrorProcessor, RetryErrorProcessor} from './retryErrorFunc';
 
 export type errorMessageFunc = () => string;
 
-export type RetryAttemptOptionsMain = {
+export interface RetryAttemptOptionsMain {
   maxAttempts?: number;
   interval?: number;
-};
+}
 
-type RetryAttemptOptionsBase = {
+interface RetryAttemptOptionsBase {
   intervalFunc?: {(i: number): Promise<void>};
   throwOn?: ('catch' | 'exceeded')[];
   errorFunc?: RetryErrorProcessor;
-};
+}
 
 export type RetryAttemptOptions = RetryAttemptOptionsMain &
   RetryAttemptOptionsBase;

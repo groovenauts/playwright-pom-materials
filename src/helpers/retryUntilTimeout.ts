@@ -3,16 +3,16 @@ import {sleep} from './sleep';
 
 import {newErrorProcessor, RetryErrorProcessor} from './retryErrorFunc';
 
-export type RetryUntilTimeoutOptionsMain = {
+export interface RetryUntilTimeoutOptionsMain {
   timeout?: number;
   interval?: number;
-};
+}
 
-type RetryUntilTimeoutOptionsBase = {
+interface RetryUntilTimeoutOptionsBase {
   intervalFunc?: {(i: number): Promise<void>};
   throwOn?: ('catch' | 'timeout')[];
   errorFunc?: RetryErrorProcessor;
-};
+}
 
 export type RetryUntilTimeoutOptions = RetryUntilTimeoutOptionsMain &
   RetryUntilTimeoutOptionsBase;
