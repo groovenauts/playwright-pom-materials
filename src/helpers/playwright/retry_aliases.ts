@@ -59,7 +59,7 @@ export const pwRetryUi = async (
  * @param { ('catch'|'exceeded')[] } [options.throwOn] 例外が起きた場合にthrowするタイミング。デフォルトは ['exceeded']
  * @param { {(errors: unknown[]): Promise<void>} } [options.errorFunc] 例外が起きた場合に呼び出される関数。デフォルトでは、最後のエラー あるいは 'Retry exceeded maxAttempts' というErrorをthrowする
  */
-export const retryAttempts = async (
+export const pwRetryAttempts = async (
   x: Locator | Page,
   fn: () => Promise<boolean>,
   options?: RetryAttemptOptions

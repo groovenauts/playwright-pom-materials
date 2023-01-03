@@ -10,7 +10,7 @@ export {pwRetryForMaterial} from './pwRetry';
 export {
   pwRetry,
   pwRetryUi,
-  retryAttempts,
+  pwRetryAttempts,
   RetryOptions,
   RetryAttemptOptions,
 } from './retry_aliases';
