@@ -2,7 +2,7 @@ import {Locator, Page} from 'playwright-core';
 
 export {RetryOptions, RetryAttemptOptions} from '../retryOptions'; // export type alias
 
-import {retry as retryRaw, uiRetry as uiRetryRaw} from '../retry';
+import {retry as retryRaw, uiRetryRaw} from '../retry';
 import {retryAttempts as retryAttemptsRaw} from '../retry';
 import {RetryOptions, RetryAttemptOptions} from '../retryOptions';
 import {sleepFunc} from './sleepFunc';

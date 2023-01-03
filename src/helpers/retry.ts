@@ -45,7 +45,7 @@ export const retry = (
  * @param {number} [options.timeout] タイムアウトをミリ秒で指定。デフォルトは 2 * 60 * config.timeoutUnit
  * @param {number} [options.interval] fnを実行するまでの間隔。ミリ秒で指定。デフォルトは uiTimeout(30)
  */
-export const uiRetry = (
+export const uiRetryRaw = (
   fn: () => Promise<boolean>,
   options?: RetryOptions
 ): Promise<void> => retryBase(fn, defaultUiRetryOptions, options);
