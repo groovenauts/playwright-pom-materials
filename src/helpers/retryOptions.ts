@@ -2,16 +2,18 @@ import {config} from './config';
 import {sleep} from './sleep';
 import {newErrorProcessor, RetryErrorProcessor} from './retryErrorFunc';
 
+interface RetryOptionsBase<ThrowOnElement extends string> {
+  intervalFunc?: {(i: number): Promise<void>};
+  throwOn?: ThrowOnElement[];
+  errorFunc?: RetryErrorProcessor;
+}
+
 export interface RetryUntilTimeoutOptionsMain {
   timeout?: number;
   interval?: number;
 }
 
-interface RetryUntilTimeoutOptionsBase {
-  intervalFunc?: {(i: number): Promise<void>};
-  throwOn?: ('catch' | 'timeout')[];
-  errorFunc?: RetryErrorProcessor;
-}
+type RetryUntilTimeoutOptionsBase = RetryOptionsBase<'catch' | 'timeout'>;
 
 export type RetryUntilTimeoutOptions = RetryUntilTimeoutOptionsMain &
   RetryUntilTimeoutOptionsBase;
@@ -57,11 +59,7 @@ export interface RetryAttemptOptionsMain {
   interval?: number;
 }
 
-interface RetryAttemptOptionsBase {
-  intervalFunc?: {(i: number): Promise<void>};
-  throwOn?: ('catch' | 'exceeded')[];
-  errorFunc?: RetryErrorProcessor;
-}
+type RetryAttemptOptionsBase = RetryOptionsBase<'catch' | 'exceeded'>;
 
 export type RetryAttemptOptions = RetryAttemptOptionsMain &
   RetryAttemptOptionsBase;
