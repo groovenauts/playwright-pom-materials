@@ -66,7 +66,7 @@ export const retryAttempts = async (
     options?.maxAttempts || defaultRetryAttemptsOptions.maxAttempts;
   const interval = options?.interval || defaultRetryAttemptsOptions.interval;
   const throwOn = options?.throwOn || ['exceeded'];
-  const errorProc = options?.errorFunc || defaultRetryErrorProc;
+  const errorFunc = options?.errorFunc || defaultRetryErrorProc;
   const intervalFunc = options?.intervalFunc || sleep;
 
   const errors: unknown[] = [];
@@ -76,12 +76,12 @@ export const retryAttempts = async (
       if (x) return;
     } catch (err) {
       errors.push(err);
-      if (throwOn.includes('catch')) await errorProc(errors);
+      if (throwOn.includes('catch')) await errorFunc(errors);
       console.debug('retry function ignored an error: ', err);
     }
     await intervalFunc(interval);
   }
-  if (throwOn.includes('exceeded')) await errorProc(errors);
+  if (throwOn.includes('exceeded')) await errorFunc(errors);
 };
 
 export const defaultRetryAttemptsOptionsMain: Required<RetryAttemptOptionsMain> =
