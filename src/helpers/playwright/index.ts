@@ -9,7 +9,7 @@ export {LocatorPredicate, reverseLocatorPredicate} from './LocatorPredicate';
 export {pwRetryForMaterial} from './pwRetry';
 export {
   pwRetry,
-  uiRetry,
+  pwRetryUi,
   retryAttempts,
   RetryOptions,
   RetryAttemptOptions,

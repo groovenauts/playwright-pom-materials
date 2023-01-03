@@ -4,7 +4,7 @@ import {
   LocatorPredicate,
   reverseLocatorPredicate,
   pwRetryForMaterial,
-  uiRetry,
+  pwRetryUi,
   hasClassFunc,
   RetryOptions,
 } from '../helpers/playwright';
@@ -45,7 +45,7 @@ export class Selectable extends Clickable {
   }
 
   async select(options?: RetryOptions): Promise<void> {
-    await uiRetry(
+    await pwRetryUi(
       this.locator,
       async () => {
         if (await this.isSelected()) return true;
@@ -57,7 +57,7 @@ export class Selectable extends Clickable {
   }
 
   async deselect(options?: RetryOptions): Promise<void> {
-    await uiRetry(
+    await pwRetryUi(
       this.locator,
       async () => {
         if (!(await this.isSelected())) return true;

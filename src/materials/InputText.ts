@@ -1,5 +1,5 @@
 import {Locator} from 'playwright-core';
-import {uiRetry, RetryOptions} from '../helpers/playwright';
+import {pwRetryUi, RetryOptions} from '../helpers/playwright';
 
 import {Operable, OperableOptions} from './Operable';
 
@@ -32,7 +32,7 @@ export class InputText extends Operable {
   }
 
   async set(value: string, options?: RetryOptions): Promise<void> {
-    await uiRetry(
+    await pwRetryUi(
       this.locator,
       async () => {
         await this.inputLocator.fill(value);

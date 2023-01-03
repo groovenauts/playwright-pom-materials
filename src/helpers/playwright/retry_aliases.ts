@@ -33,7 +33,7 @@ export const pwRetry = async (
  * @param {number} [options.timeout] タイムアウトをミリ秒で指定。デフォルトは 2 * 60 * config.timeoutUnit
  * @param {number} [options.interval] fnを実行するまでの間隔。ミリ秒で指定。デフォルトは uiTimeout(30)
  */
-export const uiRetry = async (
+export const pwRetryUi = async (
   x: Locator | Page,
   fn: () => Promise<boolean>,
   options?: RetryOptions
