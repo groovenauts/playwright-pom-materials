@@ -1,6 +1,4 @@
-import {config} from './config';
-import {sleep} from './sleep';
-import {newErrorProcessor, RetryErrorProcessor} from './retryErrorFunc';
+import {RetryErrorProcessor} from './retryErrorFunc';
 
 interface RetryOptionsBase<ThrowOnElement extends string> {
   intervalFunc?: {(i: number): Promise<void>};
@@ -25,15 +23,6 @@ export const isRetryUntilTimeoutOptions = (
   );
 };
 
-export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
-  {
-    timeout: 2 * 60 * config.timeoutUnit,
-    interval: 10 * config.timeoutUnit,
-    intervalFunc: sleep,
-    throwOn: ['timeout'],
-    errorFunc: newErrorProcessor(() => new Error('Timeout Error')),
-  };
-
 export interface RetryAttemptOptionsMain {
   maxAttempts?: number;
   interval?: number;
@@ -49,14 +38,6 @@ export const isRetryAttemptOptions = (
   return (
     typeof x === 'object' && x !== null && (x as any).maxAttempts !== undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   );
-};
-
-export const defaultRetryAttemptsOptions = {
-  maxAttempts: 3,
-  interval: config.timeoutUnit,
-  intervalFunc: sleep,
-  throwOn: ['exceeded'],
-  errorFunc: newErrorProcessor(() => new Error('Retry exceeded maxAttempts')),
 };
 
 export type RetryOptions = RetryUntilTimeoutOptions | RetryAttemptOptions;
