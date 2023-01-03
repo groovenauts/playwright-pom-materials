@@ -3,7 +3,7 @@ import {Locator} from 'playwright-core';
 import {
   LocatorPredicate,
   reverseLocatorPredicate,
-  pwRetry,
+  pwRetryForMaterial,
   uiRetry,
   hasClassFunc,
   RetryOptions,
@@ -34,11 +34,11 @@ export class Selectable extends Clickable {
   }
 
   async shouldBeSelected(): Promise<void> {
-    await pwRetry(this.locator, this.selectedPredicate);
+    await pwRetryForMaterial(this.locator, this.selectedPredicate);
   }
 
   async shouldNotBeSelected(): Promise<void> {
-    await pwRetry(
+    await pwRetryForMaterial(
       this.locator,
       reverseLocatorPredicate(this.selectedPredicate)
     );

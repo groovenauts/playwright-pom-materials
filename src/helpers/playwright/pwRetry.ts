@@ -14,7 +14,7 @@ import {sleepFunc} from './sleepFunc';
  * @param options
  * @returns
  */
-export const pwRetry = async <T extends Locator | Page>(
+export const pwRetryForMaterial = async <T extends Locator | Page>(
   x: T,
   fn: (l: T) => Promise<boolean>,
   options?: RetryOptions

@@ -4,7 +4,7 @@ import {
   LocatorPredicate,
   reverseLocatorPredicate,
   hasDisabledAttr,
-  pwRetry,
+  pwRetryForMaterial,
   RetryOptions,
 } from '../helpers/playwright';
 
@@ -30,7 +30,7 @@ export class Operable extends Displayable {
   }
 
   async waitForBeingEnabled(options?: RetryOptions): Promise<void> {
-    await pwRetry(
+    await pwRetryForMaterial(
       this.locator,
       reverseLocatorPredicate(this.disabledPredicate),
       options
@@ -42,7 +42,7 @@ export class Operable extends Displayable {
     options?: RetryOptions
   ): Promise<void> {
     const origFn = reverseLocatorPredicate(this.disabledPredicate);
-    await pwRetry(
+    await pwRetryForMaterial(
       this.locator,
       async (l: Locator) => {
         return (await origFn(l)) && (await fn(l));
@@ -56,6 +56,6 @@ export class Operable extends Displayable {
   }
 
   async shouldBeDisabled(): Promise<void> {
-    await pwRetry(this.locator, this.disabledPredicate);
+    await pwRetryForMaterial(this.locator, this.disabledPredicate);
   }
 }
