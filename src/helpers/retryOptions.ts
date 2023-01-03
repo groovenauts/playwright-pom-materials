@@ -13,10 +13,9 @@ export interface RetryUntilTimeoutOptionsMain {
   interval?: number;
 }
 
-type RetryUntilTimeoutOptionsBase = RetryOptionsBase<'catch' | 'timeout'>;
-
-export type RetryUntilTimeoutOptions = RetryUntilTimeoutOptionsMain &
-  RetryUntilTimeoutOptionsBase;
+export interface RetryUntilTimeoutOptions
+  extends RetryUntilTimeoutOptionsMain,
+    RetryOptionsBase<'catch' | 'timeout'> {}
 
 export const isRetryUntilTimeoutOptions = (
   x: unknown
@@ -40,10 +39,9 @@ export interface RetryAttemptOptionsMain {
   interval?: number;
 }
 
-type RetryAttemptOptionsBase = RetryOptionsBase<'catch' | 'exceeded'>;
-
-export type RetryAttemptOptions = RetryAttemptOptionsMain &
-  RetryAttemptOptionsBase;
+export interface RetryAttemptOptions
+  extends RetryAttemptOptionsMain,
+    RetryOptionsBase<'catch' | 'exceeded'> {}
 
 export const isRetryAttemptOptions = (x: unknown): x is RetryAttemptOptions => {
   return (
