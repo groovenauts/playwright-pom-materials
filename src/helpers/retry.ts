@@ -1,10 +1,10 @@
 import {config} from './config';
+import {retryUntilTimeout} from './retryUntilTimeout';
 import {
-  retryUntilTimeout,
   RetryUntilTimeoutOptions,
   defaultRetryUntilTimeoutOptions,
   newDefaultRetryUntilTimeoutOptions,
-} from './retryUntilTimeout';
+} from './retryOptions';
 import {
   retryAttempts,
   RetryAttemptOptions,

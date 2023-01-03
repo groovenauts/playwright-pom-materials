@@ -3,7 +3,7 @@ import {config} from '../config';
 
 import {retry, RetryOptions} from '../retry';
 import {RetryAttemptOptionsMain} from '../retryAttempts';
-import {isRetryUntilTimeoutOptions} from '../retryUntilTimeout';
+import {isRetryUntilTimeoutOptions} from '../retryOptions';
 import {sleepFunc} from './sleepFunc';
 
 /**
