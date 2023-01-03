@@ -1,6 +1,6 @@
 import {config} from './config';
 import {sleep} from './sleep';
-import {newRetryErrorProcessor} from './retryErrorFunc';
+import {newRetryErrorProcessor} from './RetryErrorProcessor';
 
 import {
   RetryUntilTimeoutOptions,

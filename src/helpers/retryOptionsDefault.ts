@@ -1,4 +1,4 @@
-import {RetryErrorProcessor} from './retryErrorFunc';
+import {RetryErrorProcessor} from './RetryErrorProcessor';
 import {
   RetryOptionsBase,
   RetryUntilTimeoutOptions,

@@ -1,4 +1,4 @@
-import {RetryErrorProcessor} from './retryErrorFunc';
+import {RetryErrorProcessor} from './RetryErrorProcessor';
 
 export interface RetryOptionsBase<ThrowOnElement extends string> {
   intervalFunc?: {(i: number): Promise<void>};
