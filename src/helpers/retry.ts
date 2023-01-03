@@ -13,7 +13,7 @@ import {
   RetryAttemptOptionsDefault,
 } from './retryOptionsDefault';
 
-const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
+export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
   new RetryUntilTimeoutOptionsDefault(
     () => 2 * 60 * config.timeoutUnit,
     () => 10 * config.timeoutUnit,

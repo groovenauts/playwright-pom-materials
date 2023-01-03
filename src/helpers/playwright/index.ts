@@ -13,3 +13,5 @@ export {
   pwRetryAttempts,
 } from './pwRetry';
 export {RetryOptions, RetryAttemptOptions} from './retry_aliases';
+export {sleepFunc} from './sleepFunc';
+export {isFrame, isPage, isLocator} from './type_guards';
