@@ -12,6 +12,7 @@ import {
   RetryUntilTimeoutOptionsDefault,
   RetryAttemptOptionsDefault,
 } from './retryOptionsDefault';
+import {mergeOptions} from './mergeOptions';
 
 export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
   new RetryUntilTimeoutOptionsDefault(
@@ -49,11 +50,13 @@ export const uiRetryRaw = (
   fn: () => Promise<boolean>,
   options?: RetryOptions
 ): Promise<void> => retryBase(fn, defaultUiRetryOptions, options);
-export const defaultUiRetryOptions = {
-  ...defaultRetryUntilTimeoutOptions,
-  timeout: config.timeoutUnit * 30,
-  interval: config.timeoutUnit * 1,
-};
+export const defaultUiRetryOptions = mergeOptions(
+  defaultRetryUntilTimeoutOptions,
+  {
+    timeout: config.timeoutUnit * 30,
+    interval: config.timeoutUnit * 1,
+  }
+);
 
 export const retryBase = async (
   fn: () => Promise<boolean>,
@@ -63,7 +66,7 @@ export const retryBase = async (
   if (isRetryAttemptOptions(options)) {
     await retryAttempts(fn, options);
   } else {
-    await retryUntilTimeout(fn, {...defaultOptions, ...options});
+    await retryUntilTimeout(fn, mergeOptions(defaultOptions, options));
   }
 };
 
@@ -87,22 +90,25 @@ export const retryUntilTimeout = async (
   fn: () => Promise<boolean>,
   options?: RetryUntilTimeoutOptions
 ): Promise<void> => {
-  const opts = {...defaultRetryUntilTimeoutOptions, ...options};
+  const {timeout, interval, throwOn, errorFunc, intervalFunc} = mergeOptions(
+    defaultRetryUntilTimeoutOptions,
+    options
+  );
 
   const t0 = Date.now();
   const errors: unknown[] = [];
-  while (Date.now() - t0 < opts.timeout) {
+  while (Date.now() - t0 < timeout) {
     try {
       const x = await fn();
       if (x) return;
     } catch (err) {
       errors.push(err);
-      if (opts.throwOn.includes('catch')) await opts.errorFunc(errors);
+      if (throwOn.includes('catch')) await errorFunc(errors);
       console.debug('retry function ignored an error: ', err);
     }
-    await opts.intervalFunc(opts.interval);
+    await intervalFunc(interval);
   }
-  if (opts.throwOn.includes('timeout')) await opts.errorFunc(errors);
+  if (throwOn.includes('timeout')) await errorFunc(errors);
 };
 
 /**
@@ -125,10 +131,8 @@ export const retryAttempts = async (
   fn: () => Promise<boolean>,
   options?: RetryAttemptOptions
 ): Promise<void> => {
-  const {maxAttempts, interval, throwOn, errorFunc, intervalFunc} = {
-    ...defaultRetryAttemptsOptions,
-    ...options,
-  };
+  const {maxAttempts, interval, throwOn, errorFunc, intervalFunc} =
+    mergeOptions(defaultRetryAttemptsOptions, options);
 
   const errors: unknown[] = [];
   for (let attempts = 0; attempts < maxAttempts; attempts++) {
