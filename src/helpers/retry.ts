@@ -36,28 +36,6 @@ export const retry = (
   options?: RetryOptions
 ): Promise<void> => retryBase(fn, defaultRetryUntilTimeoutOptions, options);
 
-/**
- * 引数 fn が true を返すまで処理を繰り返す関数。UI操作用。
- *
- * オプションに maxAttempts を指定する場合の振る舞いは retryAttempts と同じ。
- * オプションに maxAttempts を指定されない場合の振る舞いは retryUntilTimeout と同じ。
- *
- * @param [options]
- * @param {number} [options.timeout] タイムアウトをミリ秒で指定。デフォルトは 2 * 60 * config.timeoutUnit
- * @param {number} [options.interval] fnを実行するまでの間隔。ミリ秒で指定。デフォルトは uiTimeout(30)
- */
-export const uiRetryRaw = (
-  fn: () => Promise<boolean>,
-  options?: RetryOptions
-): Promise<void> => retryBase(fn, defaultUiRetryOptions, options);
-export const defaultUiRetryOptions = mergeOptions(
-  defaultRetryUntilTimeoutOptions,
-  {
-    timeout: config.timeoutUnit * 30,
-    interval: config.timeoutUnit * 1,
-  }
-);
-
 export const retryBase = async (
   fn: () => Promise<boolean>,
   defaultOptions: Required<RetryUntilTimeoutOptions>,

@@ -1,12 +1,13 @@
 import {Locator, Page} from 'playwright-core';
 import {config} from '../config';
 
-import {retry, uiRetryRaw, retryAttempts} from '../retry';
+import {retry, retryAttempts} from '../retry';
 import {
   RetryOptions,
   RetryAttemptOptions,
   RetryAttemptOptionsMain,
   isRetryUntilTimeoutOptions,
+  isRetryAttemptOptions,
 } from '../retryOptions';
 import {sleepFunc} from './sleepFunc';
 
@@ -73,9 +74,14 @@ export const pwRetryUi = async (
   fn: () => Promise<boolean>,
   options?: RetryOptions
 ): Promise<void> => {
-  options = options || {};
-  options.intervalFunc = options.intervalFunc || sleepFunc(x);
-  await uiRetryRaw(fn, options);
+  if (!isRetryAttemptOptions(options)) {
+    options = {
+      timeout: config.timeoutUnit * 30,
+      interval: config.timeoutUnit * 1,
+      ...options,
+    };
+  }
+  await pwRetry(x, fn, options);
 };
 
 /**
