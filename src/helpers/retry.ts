@@ -14,7 +14,7 @@ import {
 } from './retryOptionsDefault';
 import {mergeOptions} from './mergeOptions';
 
-export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions> =
+export const defaultRetryUntilTimeoutOptions =
   new RetryUntilTimeoutOptionsDefault(
     () => 2 * 60 * config.timeoutUnit,
     () => 10 * config.timeoutUnit,
@@ -34,7 +34,8 @@ export const defaultRetryUntilTimeoutOptions: Required<RetryUntilTimeoutOptions>
 export const retry = (
   fn: () => Promise<boolean>,
   options?: RetryOptions
-): Promise<void> => retryBase(fn, defaultRetryUntilTimeoutOptions, options);
+): Promise<void> =>
+  retryBase(fn, defaultRetryUntilTimeoutOptions.asObject(), options);
 
 export const retryBase = async (
   fn: () => Promise<boolean>,
@@ -69,7 +70,7 @@ export const retryUntilTimeout = async (
   options?: RetryUntilTimeoutOptions
 ): Promise<void> => {
   const {timeout, interval, throwOn, errorFunc, intervalFunc} = mergeOptions(
-    defaultRetryUntilTimeoutOptions,
+    defaultRetryUntilTimeoutOptions.asObject(),
     options
   );
 
@@ -110,7 +111,7 @@ export const retryAttempts = async (
   options?: RetryAttemptOptions
 ): Promise<void> => {
   const {maxAttempts, interval, throwOn, errorFunc, intervalFunc} =
-    mergeOptions(defaultRetryAttemptsOptions, options);
+    mergeOptions(defaultRetryAttemptsOptions.asObject(), options);
 
   const errors: unknown[] = [];
   for (let attempts = 0; attempts < maxAttempts; attempts++) {
@@ -127,15 +128,14 @@ export const retryAttempts = async (
   if (throwOn.includes('exceeded')) await errorFunc(errors);
 };
 
-const defaultRetryAttemptsOptions: Required<RetryAttemptOptions> =
-  new RetryAttemptOptionsDefault(
-    () => 3,
-    () => config.timeoutUnit,
-    {
-      intervalFunc: sleep,
-      throwOn: ['exceeded'],
-      errorFunc: newRetryErrorProcessor(
-        () => new Error('Retry exceeded maxAttempts')
-      ),
-    }
-  );
+const defaultRetryAttemptsOptions = new RetryAttemptOptionsDefault(
+  () => 3,
+  () => config.timeoutUnit,
+  {
+    intervalFunc: sleep,
+    throwOn: ['exceeded'],
+    errorFunc: newRetryErrorProcessor(
+      () => new Error('Retry exceeded maxAttempts')
+    ),
+  }
+);

@@ -1,31 +1,22 @@
-import {RetryErrorProcessor} from './RetryErrorProcessor';
 import {
   RetryOptionsBase,
   RetryUntilTimeoutOptions,
   RetryAttemptOptions,
 } from './retryOptions';
 
-class RetryOptionsDefaultBase<ThrowOnElement extends string>
-  implements RetryOptionsBase<ThrowOnElement>
-{
+class RetryOptionsDefaultBase<ThrowOnElement extends string> {
   constructor(
     private readonly base: Required<RetryOptionsBase<ThrowOnElement>>
   ) {}
-  get intervalFunc(): {(i: number): Promise<void>} {
-    return this.base.intervalFunc;
-  }
-  get throwOn(): ThrowOnElement[] {
-    return this.base.throwOn;
-  }
-  get errorFunc(): RetryErrorProcessor {
-    return this.base.errorFunc;
+
+  asObject(): Required<RetryOptionsBase<ThrowOnElement>> {
+    return {...this.base};
   }
 }
 
-export class RetryUntilTimeoutOptionsDefault
-  extends RetryOptionsDefaultBase<'catch' | 'timeout'>
-  implements Required<RetryUntilTimeoutOptions>
-{
+export class RetryUntilTimeoutOptionsDefault extends RetryOptionsDefaultBase<
+  'catch' | 'timeout'
+> {
   constructor(
     private readonly timeoutFn: {(): number},
     private readonly intervalFn: {(): number},
@@ -33,18 +24,19 @@ export class RetryUntilTimeoutOptionsDefault
   ) {
     super(base);
   }
-  get timeout(): number {
-    return this.timeoutFn();
-  }
-  get interval(): number {
-    return this.intervalFn();
+
+  asObject(): Required<RetryUntilTimeoutOptions> {
+    return {
+      ...super.asObject(),
+      timeout: this.timeoutFn(),
+      interval: this.intervalFn(),
+    };
   }
 }
 
-export class RetryAttemptOptionsDefault
-  extends RetryOptionsDefaultBase<'catch' | 'exceeded'>
-  implements Required<RetryAttemptOptions>
-{
+export class RetryAttemptOptionsDefault extends RetryOptionsDefaultBase<
+  'catch' | 'exceeded'
+> {
   constructor(
     private readonly maxAttemptsFn: {(): number},
     private readonly intervalFn: {(): number},
@@ -52,10 +44,12 @@ export class RetryAttemptOptionsDefault
   ) {
     super(base);
   }
-  get maxAttempts(): number {
-    return this.maxAttemptsFn();
-  }
-  get interval(): number {
-    return this.intervalFn();
+
+  asObject(): Required<RetryAttemptOptions> {
+    return {
+      ...super.asObject(),
+      maxAttempts: this.maxAttemptsFn(),
+      interval: this.intervalFn(),
+    };
   }
 }
