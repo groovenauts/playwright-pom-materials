@@ -40,13 +40,9 @@ export class SelectTag extends Clickable {
   }
 
   async label(): Promise<string | undefined> {
-    return this.locator.evaluate((el): string | undefined => {
-      const sel = el as HTMLSelectElement;
-      const idx = sel.selectedIndex;
-      return idx > -1
-        ? sel.options[idx].textContent?.trim() || undefined
-        : undefined;
-    });
+    const value = await this.locator.inputValue();
+    const l = this.locator.locator(`option[value="${value}"]`);
+    return (await l.textContent()) || undefined;
   }
 
   set(
