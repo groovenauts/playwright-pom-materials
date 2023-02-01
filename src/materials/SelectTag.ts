@@ -72,4 +72,11 @@ export class SelectTag extends Clickable {
   hasOption(label: string): Promise<boolean> {
     return this.locatorWithOption(label).isVisible();
   }
+
+  shouldHaveOption(label: string, options?: {timeout?: number}): Promise<void> {
+    return this.locatorWithOption(label).waitFor({
+      state: 'visible',
+      ...options,
+    });
+  }
 }
