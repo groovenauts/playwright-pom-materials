@@ -63,9 +63,9 @@ export class SelectTag extends Clickable {
   }
 
   hasOption(label: string): Promise<boolean> {
-    const locator = this.locator.locator(
-      `.. >> select:has(option:text("${label}"))`
-    );
+    const locator = this.locator.filter({
+      has: this.locator.page().locator(`option:text("${label}")`),
+    });
     return locator.isVisible();
   }
 }
