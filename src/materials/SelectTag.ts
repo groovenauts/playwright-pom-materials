@@ -1,3 +1,4 @@
+import {Locator} from 'playwright-core';
 import {Clickable, ClickableOptions} from './Clickable';
 import {pwRetry} from '../helpers/playwright';
 
@@ -62,10 +63,30 @@ export class SelectTag extends Clickable {
     });
   }
 
+  private locatorWithOption(label: string): Locator {
+    return this.locator.filter({
+      has: this.locator.page().locator(`option:text("${label}")`),
+    });
+  }
+
   hasOption(label: string): Promise<boolean> {
-    const locator = this.locator.locator(
-      `.. >> select:has(option:text("${label}"))`
-    );
-    return locator.isVisible();
+    return this.locatorWithOption(label).isVisible();
+  }
+
+  shouldHaveOption(label: string, options?: {timeout?: number}): Promise<void> {
+    options = options || {};
+    options.timeout = options.timeout || 120_000;
+    return this.locatorWithOption(label).waitFor({
+      state: 'visible',
+      ...options,
+    });
+  }
+
+  async selectOption(
+    label: string,
+    options?: {timeout?: number}
+  ): Promise<void> {
+    await this.shouldHaveOption(label, options);
+    await this.select(label);
   }
 }
