@@ -79,4 +79,12 @@ export class SelectTag extends Clickable {
       ...options,
     });
   }
+
+  async selectOption(
+    label: string,
+    options?: {timeout?: number}
+  ): Promise<void> {
+    await this.shouldHaveOption(label, options);
+    await this.select(label);
+  }
 }
