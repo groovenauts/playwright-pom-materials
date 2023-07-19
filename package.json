@@ -12,7 +12,7 @@
     "clean": "rm -rf lib",
     "compile": "tsc",
     "lint": "eslint . --cache --cache-location tmp/eslint-cache",
-    "prettier": "prettier --write **/*.ts",
+    "prettier": "prettier --write '**/*.ts'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
