@@ -1,4 +1,4 @@
-import {Locator} from 'playwright-core';
+import {Locator} from '@playwright/test';
 import {pwRetryUi, RetryOptions} from '../helpers/playwright';
 
 import {Operable, OperableOptions} from './Operable';

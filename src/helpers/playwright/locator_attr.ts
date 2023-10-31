@@ -1,4 +1,4 @@
-import {Locator} from 'playwright-core';
+import {Locator} from '@playwright/test';
 
 export const hasDisabledAttr = async (l: Locator): Promise<boolean> => {
   return l.evaluate((el: SVGElement | HTMLElement): boolean => {

@@ -1,4 +1,4 @@
-import {Frame, Locator, Page} from 'playwright-core';
+import {Frame, Locator, Page} from '@playwright/test';
 import {getFrame} from './locator_utils';
 
 export const sleepFunc = (

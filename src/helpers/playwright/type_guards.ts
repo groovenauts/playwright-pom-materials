@@ -1,4 +1,4 @@
-import {Frame, Page, Locator} from 'playwright-core';
+import {Frame, Page, Locator} from '@playwright/test';
 
 export const isFrame = (x: unknown): x is Frame => {
   if (typeof x !== 'object' || x === null) return false;

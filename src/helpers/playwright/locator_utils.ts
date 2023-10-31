@@ -1,4 +1,4 @@
-import {Frame, Page, Locator} from 'playwright-core';
+import {Frame, Page, Locator} from '@playwright/test';
 import {isFrame, isPage} from './type_guards';
 
 // See https://github.com/microsoft/playwright/blob/v1.14.1/src/client/locator.ts

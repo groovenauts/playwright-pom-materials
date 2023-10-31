@@ -1,4 +1,4 @@
-import {Locator} from 'playwright-core';
+import {Locator} from '@playwright/test';
 import {Clickable, ClickableOptions} from './Clickable';
 import {pwRetry} from '../helpers/playwright';
 

@@ -1,4 +1,4 @@
-import {Locator, Page} from 'playwright-core';
+import {Locator, Page} from '@playwright/test';
 import {Selectable, SelectableOptions} from './Selectable';
 
 export type SelectableArgs = string | [string, SelectableOptions?];
