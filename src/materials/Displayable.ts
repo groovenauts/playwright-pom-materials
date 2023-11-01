@@ -1,4 +1,4 @@
-import {Locator} from 'playwright-core';
+import {Locator} from '@playwright/test';
 
 export class Displayable {
   constructor(readonly locator: Locator) {}

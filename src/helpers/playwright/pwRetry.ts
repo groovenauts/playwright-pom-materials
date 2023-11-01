@@ -1,4 +1,4 @@
-import {Locator, Page} from 'playwright-core';
+import {Locator, Page} from '@playwright/test';
 import {config} from '../config';
 
 import {retry, retryAttempts} from '../retry';
