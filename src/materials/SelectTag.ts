@@ -82,7 +82,7 @@ export class SelectTag extends Clickable {
     });
   }
 
-  async selectOption(
+  async checkAndSelect(
     label: string,
     options?: {timeout?: number}
   ): Promise<void> {
