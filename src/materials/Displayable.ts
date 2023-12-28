@@ -39,13 +39,36 @@ export class Displayable implements Locator {
     pageFunction: PageFunctionOn<E, void, R>,
     options?: {timeout?: number | undefined} | undefined
   ): Promise<R>;
-  evaluate(
-    pageFunction: unknown,
-    arg?: unknown,
-    options?: unknown
+  evaluate<
+    R,
+    Arg,
+    E extends SVGElement | HTMLElement = SVGElement | HTMLElement
+  >(
+    pageFunction: PageFunctionOn<E, Arg, R> | PageFunctionOn<E, void, R>,
+    argOrOptions?: Arg | {timeout?: number | undefined} | undefined,
+    options?: {timeout?: number | undefined} | undefined
   ): Promise<R> | Promise<R> {
-    throw new Error('Method not implemented.');
+    if (options && (options as {timeout?: number | undefined}).timeout) {
+      return this._locator.evaluate(
+        pageFunction as PageFunctionOn<E, Arg, R>,
+        argOrOptions as Arg,
+        options
+      );
+    } else if (argOrOptions) {
+      if ((argOrOptions as {timeout?: number | undefined}).timeout) {
+        return this._locator.evaluate(
+          pageFunction as PageFunctionOn<E, void, R>,
+          argOrOptions as {timeout?: number | undefined}
+        );
+      }
+      return this._locator.evaluate(
+        pageFunction as PageFunctionOn<E, Arg, R>,
+        argOrOptions as Arg
+      );
+    }
+    return this._locator.evaluate(pageFunction as PageFunctionOn<E, void, R>);
   }
+
   evaluateHandle<
     R,
     Arg,
@@ -55,14 +78,27 @@ export class Displayable implements Locator {
     R,
     E extends SVGElement | HTMLElement = SVGElement | HTMLElement
   >(pageFunction: PageFunctionOn<E, void, R>): Promise<SmartHandle<R>>;
-  evaluateHandle(
-    pageFunction: unknown,
-    arg?: unknown
+  evaluateHandle<
+    R,
+    Arg,
+    E extends SVGElement | HTMLElement = SVGElement | HTMLElement
+  >(
+    pageFunction: PageFunctionOn<E, Arg, R> | PageFunctionOn<E, void, R>,
+    arg?: Arg
   ):
     | Promise<import('playwright-core/types/structs').SmartHandle<R>>
     | Promise<import('playwright-core/types/structs').SmartHandle<R>> {
-    throw new Error('Method not implemented.');
+    if (arg) {
+      return this._locator.evaluateHandle(
+        pageFunction as PageFunctionOn<E, Arg, R>,
+        arg
+      );
+    }
+    return this._locator.evaluateHandle(
+      pageFunction as PageFunctionOn<E, void, R>
+    );
   }
+
   evaluateAll<
     R,
     Arg,
@@ -71,33 +107,49 @@ export class Displayable implements Locator {
   evaluateAll<R, E extends SVGElement | HTMLElement = SVGElement | HTMLElement>(
     pageFunction: PageFunctionOn<E[], void, R>
   ): Promise<R>;
-  evaluateAll(pageFunction: unknown, arg?: unknown): Promise<R> | Promise<R> {
-    throw new Error('Method not implemented.');
+  evaluateAll<
+    R,
+    Arg,
+    E extends SVGElement | HTMLElement = SVGElement | HTMLElement
+  >(
+    pageFunction: PageFunctionOn<E[], Arg, R> | PageFunctionOn<E[], void, R>,
+    arg?: Arg
+  ): Promise<R> | Promise<R> {
+    if (arg) {
+      return this._locator.evaluateAll(
+        pageFunction as PageFunctionOn<E[], Arg, R>,
+        arg
+      );
+    }
+    return this._locator.evaluateAll(
+      pageFunction as PageFunctionOn<E[], void, R>
+    );
   }
+
   elementHandle(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<ElementHandle<SVGElement | HTMLElement> | null> {
-    throw new Error('Method not implemented.');
+    return this._locator.elementHandle(options);
   }
   all(): Promise<Locator[]> {
-    throw new Error('Method not implemented.');
+    return this._locator.all();
   }
   allInnerTexts(): Promise<string[]> {
-    throw new Error('Method not implemented.');
+    return this._locator.allInnerTexts();
   }
   allTextContents(): Promise<string[]> {
-    throw new Error('Method not implemented.');
+    return this._locator.allTextContents();
   }
   and(locator: Locator): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.and(locator);
   }
   blur(options?: {timeout?: number | undefined} | undefined): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.blur(options);
   }
   boundingBox(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<{x: number; y: number; width: number; height: number} | null> {
-    throw new Error('Method not implemented.');
+    return this._locator.boundingBox(options);
   }
   check(
     options?:
@@ -110,7 +162,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.check(options);
   }
   clear(
     options?:
@@ -121,7 +173,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.clear(options);
   }
   click(
     options?:
@@ -138,10 +190,10 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.click(options);
   }
   count(): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this._locator.count();
   }
   dblclick(
     options?:
@@ -157,14 +209,14 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.dblclick(options);
   }
   dispatchEvent(
     type: string,
     eventInit?: EvaluationArgument | undefined,
     options?: {timeout?: number | undefined} | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.dispatchEvent(type, eventInit, options);
   }
   dragTo(
     target: Locator,
@@ -179,10 +231,10 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.dragTo(target, options);
   }
   elementHandles(): Promise<ElementHandle<Node>[]> {
-    throw new Error('Method not implemented.');
+    return this._locator.elementHandles();
   }
   fill(
     value: string,
@@ -194,7 +246,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.fill(value, options);
   }
   filter(
     options?:
@@ -206,40 +258,40 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.filter(options);
   }
   first(): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.first();
   }
   focus(options?: {timeout?: number | undefined} | undefined): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.focus(options);
   }
   frameLocator(selector: string): FrameLocator {
-    throw new Error('Method not implemented.');
+    return this._locator.frameLocator(selector);
   }
   getAttribute(
     name: string,
     options?: {timeout?: number | undefined} | undefined
   ): Promise<string | null> {
-    throw new Error('Method not implemented.');
+    return this._locator.getAttribute(name, options);
   }
   getByAltText(
     text: string | RegExp,
     options?: {exact?: boolean | undefined} | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByAltText(text, options);
   }
   getByLabel(
     text: string | RegExp,
     options?: {exact?: boolean | undefined} | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByLabel(text, options);
   }
   getByPlaceholder(
     text: string | RegExp,
     options?: {exact?: boolean | undefined} | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByPlaceholder(text, options);
   }
   getByRole(
     role:
@@ -339,25 +391,25 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByRole(role, options);
   }
   getByTestId(testId: string | RegExp): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByTestId(testId);
   }
   getByText(
     text: string | RegExp,
     options?: {exact?: boolean | undefined} | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByText(text, options);
   }
   getByTitle(
     text: string | RegExp,
     options?: {exact?: boolean | undefined} | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.getByTitle(text, options);
   }
   highlight(): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.highlight();
   }
   hover(
     options?:
@@ -371,45 +423,55 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.hover(options);
   }
   innerHTML(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<string> {
-    throw new Error('Method not implemented.');
+    return this._locator.innerHTML(options);
   }
   innerText(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<string> {
-    throw new Error('Method not implemented.');
+    return this._locator.innerText(options);
   }
   inputValue(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<string> {
-    throw new Error('Method not implemented.');
+    return this._locator.inputValue(options);
   }
   isChecked(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this._locator.isChecked(options);
   }
   isDisabled(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this._locator.isDisabled(options);
   }
   isEditable(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this._locator.isEditable(options);
   }
   isEnabled(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this._locator.isEnabled(options);
+  }
+  isHidden(
+    options?: {timeout?: number | undefined} | undefined
+  ): Promise<boolean> {
+    return this._locator.isHidden(options);
+  }
+  isVisible(
+    options?: {timeout?: number | undefined} | undefined
+  ): Promise<boolean> {
+    return this._locator.isVisible(options);
   }
   last(): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.last();
   }
   locator(
     selectorOrLocator: string | Locator,
@@ -422,16 +484,16 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.locator(selectorOrLocator, options);
   }
   nth(index: number): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.nth(index);
   }
   or(locator: Locator): Locator {
-    throw new Error('Method not implemented.');
+    return this._locator.or(locator);
   }
   page(): Page {
-    throw new Error('Method not implemented.');
+    return this._locator.page();
   }
   press(
     key: string,
@@ -443,7 +505,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.press(key, options);
   }
   pressSequentially(
     text: string,
@@ -455,15 +517,15 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.pressSequentially(text, options);
   }
   screenshot(options?: LocatorScreenshotOptions | undefined): Promise<Buffer> {
-    throw new Error('Method not implemented.');
+    return this._locator.screenshot(options);
   }
   scrollIntoViewIfNeeded(
     options?: {timeout?: number | undefined} | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.scrollIntoViewIfNeeded(options);
   }
   selectOption(
     values:
@@ -490,14 +552,14 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<string[]> {
-    throw new Error('Method not implemented.');
+    return this._locator.selectOption(values, options);
   }
   selectText(
     options?:
       | {force?: boolean | undefined; timeout?: number | undefined}
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.selectText(options);
   }
   setChecked(
     checked: boolean,
@@ -511,7 +573,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.setChecked(checked, options);
   }
   setInputFiles(
     files:
@@ -523,7 +585,7 @@ export class Displayable implements Locator {
       | {noWaitAfter?: boolean | undefined; timeout?: number | undefined}
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.setInputFiles(files, options);
   }
   tap(
     options?:
@@ -537,7 +599,12 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.tap(options);
+  }
+  textContent(
+    options?: {timeout?: number | undefined} | undefined
+  ): Promise<string | null> {
+    return this._locator.textContent(options);
   }
   type(
     text: string,
@@ -549,7 +616,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.type(text, options);
   }
   uncheck(
     options?:
@@ -562,7 +629,7 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.uncheck(options);
   }
   waitFor(
     options?:
@@ -572,6 +639,6 @@ export class Displayable implements Locator {
         }
       | undefined
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    return this._locator.waitFor(options);
   }
 }
