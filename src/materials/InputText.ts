@@ -19,8 +19,8 @@ export class InputText extends Operable {
 
   private get inputLocator(): Locator {
     return this.inputSelector
-      ? this.locator.locator(this.inputSelector)
-      : this.locator;
+      ? this._locator.locator(this.inputSelector)
+      : this._locator;
   }
 
   async fill(value: string): Promise<void> {
@@ -33,7 +33,7 @@ export class InputText extends Operable {
 
   async set(value: string, options?: RetryOptions): Promise<void> {
     await pwRetryUi(
-      this.locator,
+      this._locator,
       async () => {
         await this.inputLocator.fill(value);
         return (await this.value()) === value;
@@ -45,16 +45,16 @@ export class InputText extends Operable {
   shouldHave(value: string): Promise<void> {
     // expect(await this.value()).toBe(value); のようなコードでも実現可能ではありますが、
     // Playwrightのエラーとしてトレースできないので、セレクタを保持しているかどうかを確認しています。
-    return this.locator
+    return this._locator
       .locator(`.. >> [value="${value}"]`) // locatorで参照する要素に再度valueで絞り込みするために、一度親の階層に登っています
       .waitFor({state: 'visible'});
   }
 
   has(value: string): Promise<boolean> {
-    return this.locator.locator(`.. >> [value="${value}"]`).isVisible();
+    return this._locator.locator(`.. >> [value="${value}"]`).isVisible();
   }
 
   isEditable(): Promise<boolean> {
-    return this.locator.isEditable();
+    return this._locator.isEditable();
   }
 }
