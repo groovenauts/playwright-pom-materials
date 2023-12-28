@@ -1,6 +1,6 @@
 import {Locator} from '@playwright/test';
 
-export class Displayable {
+export class Displayable implements Locator {
   constructor(readonly _locator: Locator) {}
 
   isVisible(): Promise<boolean> {
