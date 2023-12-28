@@ -14,14 +14,6 @@ import {
 export class Displayable implements Locator {
   constructor(readonly _locator: Locator) {}
 
-  isVisible(): Promise<boolean> {
-    return this._locator.isVisible();
-  }
-
-  isHidden(): Promise<boolean> {
-    return this._locator.isHidden();
-  }
-
   shouldBeVisible(options?: {timeout?: number}): Promise<void> {
     return this._locator.waitFor({state: 'visible', ...options});
   }
@@ -32,10 +24,6 @@ export class Displayable implements Locator {
     } else {
       return this._locator.waitFor({state: 'hidden', ...options});
     }
-  }
-
-  async textContent(): Promise<string> {
-    return (await this._locator.textContent()) || '';
   }
 
   evaluate<
