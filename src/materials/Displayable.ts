@@ -26,4 +26,16 @@ export class Displayable {
   async textContent(): Promise<string> {
     return (await this._locator.textContent()) || '';
   }
+
+  locator(
+    selectorOrLocator: string | Locator,
+    options?: {
+      has?: Locator;
+      hasNot?: Locator;
+      hasNotText?: string | RegExp;
+      hasText?: string | RegExp;
+    }
+  ): Locator {
+    return this._locator.locator(selectorOrLocator, options);
+  }
 }
