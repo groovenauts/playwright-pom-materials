@@ -1,3 +1,5 @@
+export {expect, test} from './assertions';
+
 export {mergeOptions} from './helpers/mergeOptions';
 export {
   retry,
