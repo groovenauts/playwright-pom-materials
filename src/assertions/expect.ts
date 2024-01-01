@@ -1,5 +1,4 @@
 import {expect as origExpect} from '@playwright/test';
-import type {Locator} from '@playwright/test';
 import {Displayable} from '../materials/Displayable';
 
 type ExpectReturnType = ReturnType<typeof origExpect>;
@@ -10,7 +9,7 @@ type ExtendType = typeof origExpect.extend;
 
 export type ExpectType = {
   (
-    x: Locator | Displayable,
+    x: unknown,
     messageOrOptions?: string | {message?: string}
   ): ExpectReturnType;
 
@@ -24,11 +23,13 @@ export type ExpectType = {
 
 export const expect = ((): ExpectType => {
   const body = (
-    x: Locator | Displayable,
+    x: unknown,
     messageOrOptions?: string | {message?: string}
   ): ExpectReturnType => {
-    const locator = x instanceof Displayable ? x._locator : x;
-    return origExpect(locator as unknown, messageOrOptions);
+    return origExpect(
+      x instanceof Displayable ? x._locator : x,
+      messageOrOptions
+    );
   };
   return Object.assign(body, {
     soft: origExpect.soft.bind(body),
