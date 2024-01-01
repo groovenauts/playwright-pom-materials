@@ -1,6 +1,6 @@
 {
   "name": "playwright-pom-materials",
-  "version": "0.1.9",
+  "version": "0.3.0",
   "description": "Playwright POM materials",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
