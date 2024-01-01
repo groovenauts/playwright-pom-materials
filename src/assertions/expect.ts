@@ -6,20 +6,22 @@ type ExpectReturnType = ReturnType<typeof origExpect>;
 type SoftType = typeof origExpect.soft;
 type ConfigureType = typeof origExpect.configure;
 type PollType = typeof origExpect.poll;
+type ExtendType = typeof origExpect.extend;
 
 export type ExpectType = {
   (
     x: Locator | Displayable,
     messageOrOptions?: string | {message?: string}
   ): ExpectReturnType;
+
+  // These methods are experimental
+  // See https://playwright.dev/docs/test-assertions#negating-matchers for more detail
   soft: SoftType;
   configure: ConfigureType;
   poll: PollType;
+  extend: ExtendType;
 };
 
-// playwright の expect を拡張して Displayable 以下のクラスを受け付けるようにします。
-// ただし以下の機能を使うことはできません。
-// - expect.extend
 export const expect = ((): ExpectType => {
   const body = (
     x: Locator | Displayable,
@@ -32,5 +34,6 @@ export const expect = ((): ExpectType => {
     soft: origExpect.soft.bind(body),
     configure: origExpect.configure.bind(body),
     poll: origExpect.poll.bind(body),
+    extend: origExpect.extend.bind(body),
   });
 })();
