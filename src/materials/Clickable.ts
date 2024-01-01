@@ -58,7 +58,7 @@ export class Clickable extends Operable {
   }
 
   protected targetLocator(): Locator {
-    return this.locator;
+    return this._locator;
   }
 
   async waitAndClick(waitOptions?: RetryOptions): Promise<void> {

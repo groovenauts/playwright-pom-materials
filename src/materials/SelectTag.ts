@@ -13,7 +13,7 @@ export class SelectTag extends Clickable {
     options?: {timeout?: number}
   ): Promise<void> {
     if (typeof label === 'string') {
-      await this.locator.selectOption({label}, options);
+      await this._locator.selectOption({label}, options);
     } else {
       if (label instanceof RegExp) {
         const regExpOpt = [
@@ -23,26 +23,26 @@ export class SelectTag extends Clickable {
         ]
           .filter(i => !!i)
           .join('');
-        const optHandle = await this.locator
+        const optHandle = await this._locator
           .locator(`option:text-matches("${label.source}", "${regExpOpt}")`)
           .elementHandle();
-        await this.locator.selectOption(optHandle, options);
+        await this._locator.selectOption(optHandle, options);
       } else {
         if (label.contains) {
-          const optHandle = await this.locator
+          const optHandle = await this._locator
             .locator(`option:has-text("${label.contains}")`)
             .elementHandle();
-          await this.locator.selectOption(optHandle, options);
+          await this._locator.selectOption(optHandle, options);
         } else {
-          await this.locator.selectOption(label, options);
+          await this._locator.selectOption(label, options);
         }
       }
     }
   }
 
   async label(): Promise<string | undefined> {
-    const value = await this.locator.inputValue();
-    const l = this.locator.locator(`option[value="${value}"]`);
+    const value = await this._locator.inputValue();
+    const l = this._locator.locator(`option[value="${value}"]`);
     return (await l.textContent()) || undefined;
   }
 
@@ -56,7 +56,7 @@ export class SelectTag extends Clickable {
         : label instanceof RegExp
         ? (s?: string): boolean => (s ? !!s.match(label) : false)
         : (s?: string): boolean => (s ? s.includes(label.contains) : false);
-    return pwRetry(this.locator, async (): Promise<boolean> => {
+    return pwRetry(this._locator, async (): Promise<boolean> => {
       await this.select(label, options);
       const value = await this.label();
       return fn(value);
@@ -64,8 +64,8 @@ export class SelectTag extends Clickable {
   }
 
   private locatorWithOption(label: string): Locator {
-    return this.locator.filter({
-      has: this.locator.page().locator(`option:text("${label}")`),
+    return this._locator.filter({
+      has: this._locator.page().locator(`option:text("${label}")`),
     });
   }
 

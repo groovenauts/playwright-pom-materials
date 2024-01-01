@@ -25,7 +25,7 @@ export const expect = ((): ExpectType => {
     x: Locator | Displayable,
     messageOrOptions?: string | {message?: string}
   ): ExpectReturnType => {
-    const locator = x instanceof Displayable ? x.locator : x;
+    const locator = x instanceof Displayable ? x._locator : x;
     return origExpect(locator as unknown, messageOrOptions);
   };
   return Object.assign(body, {

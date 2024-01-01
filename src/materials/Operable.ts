@@ -23,7 +23,7 @@ export class Operable extends Displayable {
   }
 
   isDisabled(): Promise<boolean> {
-    return this.disabledPredicate(this.locator);
+    return this.disabledPredicate(this._locator);
   }
   async isEnabled(): Promise<boolean> {
     return !(await this.isDisabled());
@@ -31,7 +31,7 @@ export class Operable extends Displayable {
 
   async waitForBeingEnabled(options?: RetryOptions): Promise<void> {
     await pwRetryForMaterial(
-      this.locator,
+      this._locator,
       reverseLocatorPredicate(this.disabledPredicate),
       options
     );
@@ -43,7 +43,7 @@ export class Operable extends Displayable {
   ): Promise<void> {
     const origFn = reverseLocatorPredicate(this.disabledPredicate);
     await pwRetryForMaterial(
-      this.locator,
+      this._locator,
       async (l: Locator) => {
         return (await origFn(l)) && (await fn(l));
       },
@@ -56,6 +56,6 @@ export class Operable extends Displayable {
   }
 
   async shouldBeDisabled(): Promise<void> {
-    await pwRetryForMaterial(this.locator, this.disabledPredicate);
+    await pwRetryForMaterial(this._locator, this.disabledPredicate);
   }
 }

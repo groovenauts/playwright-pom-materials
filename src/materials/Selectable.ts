@@ -26,7 +26,7 @@ export class Selectable extends Clickable {
   }
 
   isSelected(): Promise<boolean> {
-    return this.selectedPredicate(this.locator);
+    return this.selectedPredicate(this._locator);
   }
 
   set(value: boolean, options?: RetryOptions): Promise<void> {
@@ -34,19 +34,19 @@ export class Selectable extends Clickable {
   }
 
   async shouldBeSelected(): Promise<void> {
-    await pwRetryForMaterial(this.locator, this.selectedPredicate);
+    await pwRetryForMaterial(this._locator, this.selectedPredicate);
   }
 
   async shouldNotBeSelected(): Promise<void> {
     await pwRetryForMaterial(
-      this.locator,
+      this._locator,
       reverseLocatorPredicate(this.selectedPredicate)
     );
   }
 
   async select(options?: RetryOptions): Promise<void> {
     await pwRetryUi(
-      this.locator,
+      this._locator,
       async () => {
         if (await this.isSelected()) return true;
         await this.click();
@@ -58,7 +58,7 @@ export class Selectable extends Clickable {
 
   async deselect(options?: RetryOptions): Promise<void> {
     await pwRetryUi(
-      this.locator,
+      this._locator,
       async () => {
         if (!(await this.isSelected())) return true;
         await this.click();

@@ -1,29 +1,29 @@
 import {Locator} from '@playwright/test';
 
 export class Displayable {
-  constructor(readonly locator: Locator) {}
+  constructor(readonly _locator: Locator) {}
 
   isVisible(): Promise<boolean> {
-    return this.locator.isVisible();
+    return this._locator.isVisible();
   }
 
   isHidden(): Promise<boolean> {
-    return this.locator.isHidden();
+    return this._locator.isHidden();
   }
 
   shouldBeVisible(options?: {timeout?: number}): Promise<void> {
-    return this.locator.waitFor({state: 'visible', ...options});
+    return this._locator.waitFor({state: 'visible', ...options});
   }
 
   async shouldNotBeVisible(options?: {timeout?: number}): Promise<void> {
-    if (await this.locator.isHidden()) {
+    if (await this._locator.isHidden()) {
       return; // 見えていないのであればOK
     } else {
-      return this.locator.waitFor({state: 'hidden', ...options});
+      return this._locator.waitFor({state: 'hidden', ...options});
     }
   }
 
   async textContent(): Promise<string> {
-    return (await this.locator.textContent()) || '';
+    return (await this._locator.textContent()) || '';
   }
 }
